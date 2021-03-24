@@ -1,21 +1,16 @@
 package com.cookandroid.android;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    Fragment frag1,frag2,frag3;
+    Fragment frag1,frag_sys,frag3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
        // setSupportActionBar(toolbar);
 
         frag1 = new AnalogFragment();
-        frag2 = new DigitalFragment();
+        frag_sys = new SystemFragment();
         frag3 = new CalenderFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag1).commit();
 
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addTab(tabs.newTab().setText("DIGITAL CLOCK"));
-        tabs.addTab(tabs.newTab().setText("ANALOG CLOCK"));
+        tabs.addTab(tabs.newTab().setText("시스템 관리"));
         tabs.addTab(tabs.newTab().setText("CALENDER"));
 
         tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -42,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
                 int position = tab.getPosition();
 
                 Fragment frselected = null;
+                Fragment frselected2 = null;
                 if (position == 0) {
                     frselected = frag1;
                 } else if (position == 1) {
-                    frselected = frag2;
+                    frselected = frag_sys;
                 } else if (position == 2) {
                     frselected = frag3;
                 }
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, frselected).commit();
             }
             @Override

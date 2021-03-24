@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class DigitalFragment extends Fragment {
+public class SystemFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_digital,null);
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_system,null);
         return view;
     }
 }
