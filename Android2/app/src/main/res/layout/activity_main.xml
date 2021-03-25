@@ -35,13 +35,24 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
-        </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            ></LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

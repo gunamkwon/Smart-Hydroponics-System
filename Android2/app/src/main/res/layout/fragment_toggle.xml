@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="*">
+
+
+    <TableRow>
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:text="상추"></Button>
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:text="배추"></Button>
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:text="식물"></Button>
+    </TableRow>
+</TableLayout>
