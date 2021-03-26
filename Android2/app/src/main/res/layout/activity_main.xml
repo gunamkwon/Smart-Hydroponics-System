@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -15,21 +17,21 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:elevation="1dp"
-                android:id="@+id/toolbar">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             </androidx.appcompat.widget.Toolbar>
 
             <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="1dp"
-                android:id="@+id/tabs"
-                app:tabMode="fixed"
-                app:tabGravity="fill">
+                app:tabGravity="fill"
+                app:tabMode="fixed">
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -40,18 +42,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
-
-        </LinearLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></LinearLayout>
 
         <LinearLayout
             android:id="@+id/container_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
             ></LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

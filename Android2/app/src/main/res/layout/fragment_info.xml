@@ -20,14 +20,45 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="150dp"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:src="@drawable/lettuce" />
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:text="상추는 이래로부터 솰라솰라~"></TextView>
+            android:layout_height="282dp"
+            android:text="상추는 연중 생산이 가능하고 비교적 재배가 수월한 작물이다.
+                상추는 광발아성종자로 호냉성 채소작물로 발아가 비교적 쉬우며 발아 전 종자를 저온에 보관 후
+약 2~3일간 암발아 시킨 후 광원에 노출시키는 것이 생육에 도움이 된다. 상추는 온도에 비교적 민감한 작물이기
+때문에 온도가 높고 일조량이 많을 경우 꽃눈이 생기고 꽃대가 올라와 품질이 떨어지고 수확량이 떨어질 수 있다.
+정상적으로 파종과 육묘과정을 거치면 상추재배 기간은 수확까지 보통 30일에서 40일정도 소요되며, 온도조건
+과 광효율, 뿌리생장 환경조건이 좋을 경우는 파종 후 23~25일만에도 수확이 가능하다."
+            android:textSize="13sp"></TextView>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TDS: 560 ~ 840mg/L"/>
+
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일조량:"/>
+    </LinearLayout>
 </LinearLayout>
+
+<!--
+링크: http://blog.naver.com/PostView.nhn?blogId=ifiu&logNo=221527061971&parentCategoryNo=&categoryNo=70&viewDate=&isShowPopularPosts=true&from=search
+-->
