@@ -2,5 +2,5 @@
 
 int main()
 {
-  printf("Settings");
+  printf("Think-ji_University");
 }
