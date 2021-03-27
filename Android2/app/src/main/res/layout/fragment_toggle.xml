@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:stretchColumns="*">
+    android:stretchColumns="*"
+    android:background="@color/white">
 
 
     <TableRow>
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="25dp">
 
         <Button
             android:layout_gravity="center_horizontal"

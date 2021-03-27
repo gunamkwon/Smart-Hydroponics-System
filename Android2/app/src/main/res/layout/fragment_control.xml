@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="*">
+    android:stretchColumns="*"
+    android:background="@color/white">
 
     <!-- 외부제어 -->
     <TableRow

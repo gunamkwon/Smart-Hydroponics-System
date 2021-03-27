@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="0">
+    android:stretchColumns="0"
+    android:background="@color/white">
 
     <TableRow
         android:background="@color/grey"
@@ -33,6 +34,7 @@
             android:layout_span="3"/>
 
         <TextView
+            android:textColor="@color/green"
             android:text="25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
             android:textSize="40sp"
             android:layout_gravity="center_vertical"/>
         <TextView
+            android:textColor="@color/green"
             android:text="%"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
@@ -65,12 +68,14 @@
 
         <TextView
             android:text="25"
+            android:textColor="@color/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
             android:textSize="40sp"
             android:layout_gravity="center_vertical"/>
         <TextView
+            android:textColor="@color/green"
             android:text="%"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
@@ -95,6 +100,7 @@
             android:layout_span="3"/>
 
         <TextView
+            android:textColor="@color/green"
             android:text="25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,6 +108,7 @@
             android:textSize="40sp"
             android:layout_gravity="center_vertical"/>
         <TextView
+            android:textColor="@color/green"
             android:text="%"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
