@@ -9,6 +9,10 @@ import androidx.fragment.app.Fragment;
 
 public class SystemFragment extends Fragment {
 
+    public static SystemFragment newInstance() {
+        return new SystemFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
