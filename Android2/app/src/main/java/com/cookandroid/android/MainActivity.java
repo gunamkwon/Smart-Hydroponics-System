@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.OutputStream;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
             frag_sys, frag_ctrl,
             frag3;
 
+    private static OutputStream outputStream = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,18 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment).commit();
+    }
+
+    public static void sendData(String text) {
+        // 문자열에 개행문자("\n")를 추가해줍니다.
+        text += "\n";
+        try {
+            // 데이터 송신
+            outputStream.write(text.getBytes());
+            frselected.
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

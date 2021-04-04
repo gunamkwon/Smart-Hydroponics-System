@@ -28,6 +28,7 @@
             android:text="원격조종"/>
 
         <Switch
+            android:id="@+id/control_switch"
             android:layout_width="250dp"/>
     </TableRow>
 
@@ -47,12 +48,20 @@
 
     <TableRow>
 
-        <Switch android:layout_gravity="center_horizontal"></Switch>
-
-        <Switch android:layout_gravity="center_horizontal"></Switch>
+        <Switch
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/led_switch">
+        </Switch>
 
         <Switch
-            android:layout_gravity="center_horizontal"></Switch>
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/led_switch2">
+        </Switch>
+
+        <Switch
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/led_switch3">
+        </Switch>
     </TableRow>
 
 </TableLayout>
