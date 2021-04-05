@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 public class CalenderFragment extends Fragment {
 
-    private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
