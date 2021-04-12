@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     final static int BT_REQUEST_ENABLE = 1;
     final static int BT_MESSAGE_READ = 2;
     final static int BT_CONNECTING_STATUS = 3;
-    final static UUID BT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    final static UUID BT_UUID = UUID.fromString("00000003-0000-1000-8000-00805F9B34FB");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         frag_ctrl = new ControlFragment();
         frag_connect = new ConnectionFragment();
         frag3 = new CalenderFragment();
+        frag_connect = new ConnectionFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag_info)
                 .replace(R.id.container_main, frag_toggle).commit();
 
@@ -96,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab){
             }
-
         });
+
     // BLUETOOTH
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
@@ -163,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                 mListPairedDevices = new ArrayList<String>();
                 for (BluetoothDevice device : mPairedDevices) {
                     mListPairedDevices.add(device.getName());
-                    //mListPairedDevices.add(device.getName() + "\n" + device.getAddress());
                 }
                 final CharSequence[] items = mListPairedDevices.toArray(new CharSequence[mListPairedDevices.size()]);
                 mListPairedDevices.toArray(new CharSequence[mListPairedDevices.size()]);
@@ -184,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "블루투스가 비활성화 되어 있습니다.", Toast.LENGTH_SHORT).show();
         }
     }
+
     void connectSelectedDevice(String selectedDeviceName) {
         for(BluetoothDevice tempDevice : mPairedDevices) {
             if (selectedDeviceName.equals(tempDevice.getName())) {
@@ -192,15 +196,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         try {
-            mBluetoothSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(BT_UUID);
-            mBluetoothSocket.connect();
-            mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
-            mThreadConnectedBluetooth.start();
-            mBluetoothHandler.obtainMessage(BT_CONNECTING_STATUS, 1, -1).sendToTarget();
+            mBluetoothSocket = createBluetoothSocket(mBluetoothDevice);
         } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "블루투스 연결 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓 생성에 실패했습니다.", Toast.LENGTH_SHORT).show();
         }
+
+        System.out.println(BT_UUID);
+
+        try {
+            mBluetoothSocket.connect();
+        } catch (IOException e) {
+            try {
+                mBluetoothSocket.close();
+                Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료되었습니다.", Toast.LENGTH_SHORT).show();
+            } catch(IOException e2) {
+                Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료가 실패되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
+        mThreadConnectedBluetooth.start();
     }
+
     private class ConnectedBluetoothThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
@@ -221,24 +239,30 @@ public class MainActivity extends AppCompatActivity {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
-        public void run() {
-            byte[] buffer = new byte[1024];
-            int bytes;
 
+        @Override
+        public void run() {
+            byte[] buffer = new byte[1024];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+            // Keep listening to the InputStream until an exception occurs
             while (true) {
                 try {
+                    // Read from the InputStream
                     bytes = mmInStream.available();
                     if (bytes != 0) {
-                        SystemClock.sleep(100);
-                        bytes = mmInStream.available();
-                        bytes = mmInStream.read(buffer, 0, bytes);
-                        mBluetoothHandler.obtainMessage(BT_MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                        buffer = new byte[1024];
+                        SystemClock.sleep(100); //pause and wait for rest of data. Adjust this depending on your sending speed.
+                        bytes = mmInStream.available(); // how many bytes are ready to be read?
+                        bytes = mmInStream.read(buffer, 0, bytes); // record how many bytes we actually read
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+
                     break;
                 }
             }
         }
+
         public void write(String str) {
             byte[] bytes = str.getBytes();
             try {
@@ -247,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "데이터 전송 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
             }
         }
+
         public void cancel() {
             try {
                 mmSocket.close();
@@ -255,7 +280,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        try {
+            final Method m = device.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+            return (BluetoothSocket) m.invoke(device, 1);
+
+        } catch (Exception e) {
+            //Log.e(TAG, "Could not create Insecure RFComm Connection",e);
+        }
+        return  device.createRfcommSocketToServiceRecord(BT_UUID);
+    }
 }
+
 
 // https://kitesoft.tistory.com/83?category=549069
 // https://hijjang2.tistory.com/272?category=856483
