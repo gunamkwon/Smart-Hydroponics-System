@@ -33,11 +33,11 @@
         <Button
             android:id="@+id/plant_btn2"
             android:layout_gravity="center_horizontal"
-            android:text="배추"></Button>
+            android:text="부추"></Button>
 
         <Button
             android:id="@+id/plant_btn3"
             android:layout_gravity="center_horizontal"
-            android:text="식물"></Button>
+            android:text="딸기"></Button>
     </TableRow>
 </TableLayout>

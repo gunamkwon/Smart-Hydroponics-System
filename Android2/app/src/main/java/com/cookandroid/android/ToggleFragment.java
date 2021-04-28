@@ -13,20 +13,28 @@ public class ToggleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_toggle,null);
-        Button button1 = (Button)view.findViewById(R.id.plant_btn1);
-        Button button2 = (Button)view.findViewById(R.id.plant_btn2);
+        Button btn_lettuce = (Button)view.findViewById(R.id.plant_btn1);
+        Button btn_chives = (Button)view.findViewById(R.id.plant_btn2);
+        Button btn_strawberry = (Button)view.findViewById(R.id.plant_btn3);
 
-        button1.setOnClickListener(new View.OnClickListener(){
+        btn_lettuce.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).toggle_info(InfoFragment.newInstance());
+                ((MainActivity)getActivity()).toggle_info(LettuceFragment.newInstance());
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener(){
+        btn_chives.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).toggle_info(SystemFragment.newInstance());
+                ((MainActivity)getActivity()).toggle_info(ChivesFragment.newInstance());
+            }
+        });
+
+        btn_strawberry.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).toggle_info(StrawberryFragment.newInstance());
             }
         });
 

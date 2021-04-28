@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_height="wrap_content"
+        android:text="식물정보"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/strawberry"
+            android:background="@drawable/border_right"
+            android:layout_margin="3dp"/>
+
+        <TextView
+            android:id="@+id/strawberrytext"
+            android:padding="3dp"
+            android:background="@drawable/border_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="3dp"
+            android:text="딸기는 호냉성 열매채소(외형으로는 과일이지만)이기 때문에 냉량한 기후에 강하다.
+생육에 적당한 온도는 17-20℃이며, 토양은 배수가 잘되고 수분을 알맞게 지닌 참흙이 좋다.
+재배 방법은 매년 가을에 새 모종을 심어 1번만 수확하는 1년식 재배와, 1번 모종을 심고 수년간 수확을 계속하는 다년식 재배 방법이 있다.
+1년식 재배는 따뜻한 지방에서 촉성재배 또는 반촉성재배를 할 때 쓰이는 방법으로서 고품질의 과실을 생산한다.
+추운 지방에서는 주로 3-4년 수확을 계속하는 다년식 재배방법을 많이 이용하고 있다. 이 재배방식에서는 2-3년째가 수확량도 많고 품질도 좋다.
+시설재배에서는 1년식 재배를 하지만, 노지재배에서는 다년식 재배가 많다.
+모종을 뜨기 위한 딸기밭은 수확이 끝난 다음 2줄로 1줄씩 솎아내고, 포기 사이도 넓혀 거름을 충분히 주고, 나오는 포복지를 알맞게 배치하여 모종을 기른다.
+아주 심는 시기는 9월 하순부터 10월 상순이 적기이다.."
+            android:textSize="13sp"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom"
+        android:layout_margin="3dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:text="TDS: 512 ~ 960mg/L"
+            android:textSize="20dp" />
+
+        <TextView
+            android:textColor="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:text="일조량:"
+            android:textSize="20dp" />
+    </LinearLayout>
+</LinearLayout>

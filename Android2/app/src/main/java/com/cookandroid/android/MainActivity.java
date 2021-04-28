@@ -14,8 +14,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -31,10 +31,12 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    FragmentManager manager;
+
     Fragment frag_info, frag_toggle,
             frag_sys, frag_ctrl,
             frag3, frag_connect;
-
+    SystemFragment fragment_sys;
     private BluetoothAdapter bluetoothAdapter;
     Set<BluetoothDevice> mPairedDevices;
     List<String> mListPairedDevices;
@@ -49,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
     final static int BT_CONNECTING_STATUS = 3;
     final static UUID BT_UUID = UUID.fromString("00000003-0000-1000-8000-00805F9B34FB");
 
+    static final int STATE_LISTENING = 1;
+    static final int STATE_CONNECTING=2;
+    static final int STATE_CONNECTED=3;
+    static final int STATE_CONNECTION_FAILED=4;
+    static final int STATE_MESSAGE_RECEIVED=5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +64,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        // setSupportActionBar(toolbar);
 
-        frag_info = new InfoFragment();
+        manager = getSupportFragmentManager();
+        fragment_sys = (SystemFragment) manager.findFragmentById(R.id.frag_sys);
+
+        frag_info = new LettuceFragment();
         frag_toggle = new ToggleFragment();
         frag_sys = new SystemFragment();
         frag_ctrl = new ControlFragment();
         frag_connect = new ConnectionFragment();
         frag3 = new CalenderFragment();
         frag_connect = new ConnectionFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag_info)
+        manager.beginTransaction().replace(R.id.container, frag_info)
                 .replace(R.id.container_main, frag_toggle).commit();
-
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.addTab(tabs.newTab().setText("식물 선택"));
@@ -91,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     frselected2 = frag_connect;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, frselected)
+                manager.beginTransaction().replace(R.id.container, frselected)
                         .replace(R.id.container_main, frselected2).commit();
             }
             @Override
@@ -117,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             mThreadConnectedBluetooth.write(str);
         }
     }
+
     public void bluetoothON() {
         if(bluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), "블루투스에서 지원하지않는 기기입니다.", Toast.LENGTH_LONG).show();
@@ -134,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     public void bluetoothOFF() {
         if(bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.disable();
@@ -143,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "불루투스가 이미 비활성화되어 있습니다.",Toast.LENGTH_SHORT).show();
         }
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case BT_REQUEST_ENABLE:
@@ -187,6 +199,35 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "블루투스가 비활성화 되어 있습니다.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    Handler handler=new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+
+            switch (msg.what)
+            {
+                case STATE_LISTENING:
+                    //status.setText("Listening");
+                    break;
+                case STATE_CONNECTING:
+                    //status.setText("Connecting");
+                    break;
+                case STATE_CONNECTED:
+                    //status.setText("Connected");
+                    break;
+                case STATE_CONNECTION_FAILED:
+                    //status.setText("Connection Failed");
+                    break;
+                case STATE_MESSAGE_RECEIVED:
+                    byte[] readBuff= (byte[]) msg.obj;
+                    String tempMsg=new String(readBuff,0,msg.arg1);
+                    if(tempMsg.contains("a"))
+                        fragment_sys.setData("15");
+                    break;
+            }
+            return true;
+        }
+    });
 
     void connectSelectedDevice(String selectedDeviceName) {
         for(BluetoothDevice tempDevice : mPairedDevices) {
@@ -254,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
                         SystemClock.sleep(100); //pause and wait for rest of data. Adjust this depending on your sending speed.
                         bytes = mmInStream.available(); // how many bytes are ready to be read?
                         bytes = mmInStream.read(buffer, 0, bytes); // record how many bytes we actually read
+                        handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -293,7 +335,5 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+//https://coding-factory.tistory.com/126
 
-// https://kitesoft.tistory.com/83?category=549069
-// https://hijjang2.tistory.com/272?category=856483
-//https://www.masterqna.com/android/53503/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-fragment%EC%97%90%EC%84%9C-%EB%B2%84%ED%8A%BC-%EC%9D%B4%EB%B2%A4%ED%8A%B8
