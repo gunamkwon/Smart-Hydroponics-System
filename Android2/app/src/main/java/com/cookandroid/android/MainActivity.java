@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         frag_info = new LettuceFragment();
         frag_toggle = new ToggleFragment();
         frag_sys = new SystemFragment();
+
         frag_ctrl = new ControlFragment();
         frag_connect = new ConnectionFragment();
         frag3 = new CalenderFragment();
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "블루투스가 비활성화 되었습니다.", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(getApplicationContext(), "불루투스가 이미 비활성화되어 있습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "블루투스가 이미 비활성화되어 있습니다.",Toast.LENGTH_SHORT).show();
         }
     }
 

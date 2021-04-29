@@ -20,7 +20,7 @@
     </TableRow>
 
     <TableRow
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
@@ -28,40 +28,37 @@
             android:text="원격조종"/>
 
         <Switch
+            android:paddingRight="10dp"
             android:id="@+id/control_switch"
             android:layout_width="250dp"/>
     </TableRow>
 
     <TableRow
+        android:layout_marginLeft="30dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
+
         <TextView
-            android:text="LED"
+            android:text="LED 자동 제어"
             android:layout_gravity="center"/>
         <TextView
-            android:text="LED"
-            android:layout_gravity="center"/>
-        <TextView
-            android:text="LED"
+            android:text="LED 제어"
             android:layout_gravity="center"/>
     </TableRow>
 
-    <TableRow>
-
-        <Switch
+    <TableRow
+        android:layout_marginLeft="30dp">
+        <ToggleButton
             android:layout_gravity="center_horizontal"
-            android:id="@+id/led_switch">
-        </Switch>
+            android:id="@+id/led_switch"
+            android:textOff="자동"
+            android:textOn="수동">
+        </ToggleButton>
 
-        <Switch
+        <ToggleButton
             android:layout_gravity="center_horizontal"
             android:id="@+id/led_switch2">
-        </Switch>
-
-        <Switch
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/led_switch3">
-        </Switch>
+        </ToggleButton>
     </TableRow>
 
 </TableLayout>

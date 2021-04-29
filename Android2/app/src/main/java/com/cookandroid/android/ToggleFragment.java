@@ -21,6 +21,7 @@ public class ToggleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).toggle_info(LettuceFragment.newInstance());
+                ((MainActivity)getActivity()).sendData("1#");
             }
         });
 
@@ -28,6 +29,7 @@ public class ToggleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).toggle_info(ChivesFragment.newInstance());
+                ((MainActivity)getActivity()).sendData("2#");
             }
         });
 
@@ -35,6 +37,7 @@ public class ToggleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).toggle_info(StrawberryFragment.newInstance());
+                ((MainActivity)getActivity()).sendData("3#");
             }
         });
 
