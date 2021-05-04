@@ -31,7 +31,7 @@ public class ControlFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
                     autoled_btn.setEnabled(true);
-                    if(ctrl)    led_btn.setEnabled(true);
+                    if(ctrl)   led_btn.setEnabled(true);
                 }
                 else {
                     autoled_btn.setEnabled(false);
@@ -45,12 +45,13 @@ public class ControlFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     ctrl = isChecked;
-                    ((MainActivity)getActivity()).sendData("1");
+                    ((MainActivity)getActivity()).sendData("1A");
                     led_btn.setEnabled(true);
                 }
                 else {
                     ctrl = isChecked;
-                    ((MainActivity)getActivity()).sendData("1");
+                    ((MainActivity)getActivity()).sendData("2A");
+                    led_btn.setEnabled(false);
                 }
             }
         });
@@ -59,10 +60,10 @@ public class ControlFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
-                    ((MainActivity)getActivity()).sendData("2");
+                    ((MainActivity)getActivity()).sendData("1M");
                 }
                 else {
-                    ((MainActivity)getActivity()).sendData("M2");
+                    ((MainActivity)getActivity()).sendData("2M");
                 }
             }
         });
