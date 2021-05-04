@@ -59,7 +59,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:src="@drawable/water"
+            android:src="@drawable/level"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="fitStart"
@@ -92,7 +92,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:src="@drawable/water"
+            android:src="@drawable/bluetooth"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="fitStart"
@@ -102,22 +102,15 @@
             android:layout_span="3"/>
 
         <TextView
-            android:textColor="@color/green"
-            android:text="25"
+            android:id="@+id/connect_state"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:text="Unconnected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:textSize="40sp"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:textColor="@color/green"
-            android:text="%"
+            android:textSize="15sp"
             android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="20dp"
-            android:textSize="30sp"
-            />
+            android:layout_span="2"/>
     </TableRow>
 
 </TableLayout>

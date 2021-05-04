@@ -222,8 +222,10 @@ public class MainActivity extends AppCompatActivity {
                 case STATE_MESSAGE_RECEIVED:
                     byte[] readBuff= (byte[]) msg.obj;
                     String tempMsg=new String(readBuff,0,msg.arg1);
-                    if(tempMsg.contains("a"))
-                        fragment_sys.setData("15");
+                    if(tempMsg.contains("v"))
+                        fragment_sys.setData(tempMsg.substring(1));
+                    else if(tempMsg.contains("l"))
+                        fragment_sys.setData(tempMsg);
                     break;
             }
             return true;
@@ -259,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
         mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
         mThreadConnectedBluetooth.start();
+        fragment_sys.setConnected();
     }
 
     private class ConnectedBluetoothThread extends Thread {
