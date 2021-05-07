@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     public void bluetoothOFF() {
         if(bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.disable();
+            fragment_sys.setConnectState(0);
             Toast.makeText(getApplicationContext(), "블루투스가 비활성화 되었습니다.", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     if(tempMsg.contains("v"))
                         fragment_sys.setData(tempMsg.substring(1));
                     else if(tempMsg.contains("l"))
-                        fragment_sys.setData(tempMsg);
+                        fragment_sys.setLevelState(tempMsg.substring(1));
                     break;
             }
             return true;
@@ -252,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             try {
                 mBluetoothSocket.close();
+                fragment_sys.setConnectState(0);
                 Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료되었습니다.", Toast.LENGTH_SHORT).show();
             } catch(IOException e2) {
                 Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료가 실패되었습니다.", Toast.LENGTH_LONG).show();
@@ -261,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
         mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
         mThreadConnectedBluetooth.start();
-        fragment_sys.setConnected();
+        fragment_sys.setConnectState(1);
     }
 
     private class ConnectedBluetoothThread extends Thread {

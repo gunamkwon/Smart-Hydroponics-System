@@ -69,21 +69,15 @@
             android:layout_span="3"/>
 
         <TextView
-            android:text="25"
+            android:id="@+id/level_state"
             android:textColor="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:textSize="40sp"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:textColor="@color/green"
-            android:text="%"
+            android:text="Enough"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="20dp"
-            android:textSize="30sp"
+            android:textSize="23dp"
+            android:layout_span="2"
             />
     </TableRow>
 

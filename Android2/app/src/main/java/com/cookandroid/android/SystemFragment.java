@@ -13,9 +13,11 @@ import org.w3c.dom.Text;
 
 public class SystemFragment extends Fragment {
 
-    static int green;
+    static int green, red;
     private static TextView data1;
+    private static TextView level;
     private static TextView connect;
+
     public static SystemFragment newInstance() {
         return new SystemFragment();
     }
@@ -26,7 +28,9 @@ public class SystemFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_system,null);
         data1 = (TextView) view.findViewById(R.id.data_water);
         connect = (TextView) view.findViewById(R.id.connect_state);
-        green =getResources().getColor(R.color.green);
+        level = (TextView) view.findViewById(R.id.level_state);
+        green = getResources().getColor(R.color.green);
+        red = getResources().getColor(R.color.red);
         return view;
 
     }
@@ -36,16 +40,32 @@ public class SystemFragment extends Fragment {
         SystemFragment.data1.setText(data);
     }
 
-    public static void setEnough()
+    public static void setLevelState(String state)
     {
-
+        if(state == "1") {
+            SystemFragment.level.setText("Enough");
+            SystemFragment.connect.setTextSize(23);
+            SystemFragment.connect.setTextColor(green);
+        }
+        else {
+            SystemFragment.level.setText("Shortage");
+            SystemFragment.connect.setTextSize(18);
+            SystemFragment.connect.setTextColor(red);
+        }
     }
 
-    public static void setConnected()
+    public static void setConnectState(int state)
     {
-        SystemFragment.connect.setText("Connected");
-        SystemFragment.connect.setTextSize(18);
-        SystemFragment.connect.setTextColor(green);
+        if(state == 1) {
+            SystemFragment.connect.setText("Connected");
+            SystemFragment.connect.setTextSize(18);
+            SystemFragment.connect.setTextColor(green);
+        }
+        else {
+            SystemFragment.connect.setText("UnConnected");
+            SystemFragment.connect.setTextSize(15);
+            SystemFragment.connect.setTextColor(red);
+        }
     }
 
 
