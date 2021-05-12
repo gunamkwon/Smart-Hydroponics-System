@@ -4,8 +4,9 @@ import math
 import sys
 from grove.adc import ADC
 from tds import *
-import RPi.GPIO as GPIO
 from motor import *
+from led import *
+import RPi.GPIO as GPIO
 
 
 class tdsThread(threading.Thread):
@@ -28,13 +29,47 @@ class motorThread(threading.Thread):
         global tds_Value
         tds_Value = tds()
         while 1:
-            if tds_Value < 100.0: # when tds value is lower than minimum tds.
-                motor_run(3) # turn on motor during 3 sec.
-                time.sleep(10) # and wait 10 sec
+            #if tds_Value < tds_Min
+            if tds_Value < 100: # when tds value is lower than minimum tds.
+                motor_7run(1) # turn on motor during 5 sec.
+                time.sleep(120) # and wait 2 min.
                 
+            #elif tds_Value > tds_Max
+            elif tds_Value > 200: # when tds value is lower than maximum tds.
+                motor_8run(1) # turn on motor during 30 sec.
+                time.sleep(120) # and wait 2 min.
+                
+            else:
+                time.sleep(1)
+                
+                
+class ledThread(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self, name='Led Thread')
+        
+    def run(self):
+        try:
+            while 1:
+                now = time_now()
+                print('now Hour: {}'.format(now))
+                #if led_auto == 1:
+                led_run(now)
+                time.sleep(5)
+            #else:
+                #print("led_task is manul now")
+                    #if led_Value == 1:
+                        #GPIO.output(4, False)
+                    #else:
+                        #GPIO.output(4, True)
+                        #time.sleep(0.1)
+        except KeyboardInterrupt:
+            print("Keyboard interrupt")
+            GPIO.cleanup() # cleanup all GPIO
+            
     
 def main():
     motor_setup()
+    led_setup()
     
     global tds_Value
     
@@ -42,6 +77,8 @@ def main():
     t1.start()
     t2 = motorThread()
     t2.start()
+    t3 = ledThread()
+    t3.start()
     
     
 if __name__ == '__main__':
