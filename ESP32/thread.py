@@ -1,10 +1,24 @@
+#System
 import threading
+import sys
 import time
-import bt2
-import tds
-from bluetooth import *
+import math
 
+#THREAD
+import bt2
+from motor import *
+from tds import *
+from bluetooth import *
+from liquid_level import *
+
+#etc
+import RPi.GPIO as GPIO
+from grove.adc import ADC
+
+# global variable
 led_auto = 0
+
+# Make Socket
 server_socket= BluetoothSocket(RFCOMM)
 server_socket,client_socket,address = bt2.bt_setup(server_socket)
 
@@ -13,7 +27,6 @@ class LED(threading.Thread):
         super().__init__()
         
     def run(self):
-        #led = LED.setup()
         while True:
             if(led_auto == 1):
                 auto_time = led.time_check() 
@@ -30,15 +43,18 @@ class LED(threading.Thread):
 class LEVEL(threading.Thread):
     def __init__(self):
         super().__init__()
+        
     def run(self):
-        #level = water_level.setup()
+        #liquid_setup()
         while True:
-            #ret = water_level.check(level)
+            #ret = check()
             print("chekcing level\n")
             ret = 0
             if(ret != 1):
-                bt2.send(client_socket,"v15.1")
+                bt2.send(client_socket,"l1") #l1 = sufficient
                 print("sending Message")
+            else:
+                bt2.send(client_socket,"l0") #l0 = enough
             time.sleep(10)
 
             
@@ -88,6 +104,18 @@ class MOTOR(threading.Thread):
             else:
                 print('Select crops by your smartphone')
 
+class TDS(threading.Thread):
+    def __init__(self):
+        super().__init__()
+    
+    def run(self):
+        while 1:
+            msg_tds = tds()
+            msg = "v" + str(msg_tds)
+            print(msg)
+            bt2.send(client_socket,msg)
+            time.sleep(1)
+        
 print("main thread start")
 #LED THREAD
 led = LED()
@@ -100,6 +128,10 @@ level.start()
 #MOTOR THREAD
 motor = MOTOR()
 motor.start()
+
+#TDS THREAD
+#tds = TDS()
+#tds.start()
 
 #BLUETOOTH THREAD
 while True:
@@ -144,5 +176,6 @@ while True:
 led.join()
 level.join()
 motor.join()
+#tds.join()
 bt2.close()
 print("main thread end")
