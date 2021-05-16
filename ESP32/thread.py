@@ -1,9 +1,12 @@
 import threading
 import time
 import bt2
+import tds
 from bluetooth import *
 
 led_auto = 0
+server_socket= BluetoothSocket(RFCOMM)
+server_socket,client_socket,address = bt2.bt_setup(server_socket)
 
 class LED(threading.Thread):
     def __init__(self):
@@ -20,6 +23,7 @@ class LED(threading.Thread):
                     led.led_off()
                 time.sleep(0.1)
             else:
+                send = 1
                 print("led_task is manul now")
                 time.sleep(10)
             
@@ -33,12 +37,12 @@ class LEVEL(threading.Thread):
             print("chekcing level\n")
             ret = 0
             if(ret != 1):
-                #Bluetooth.send("W")
+                bt2.send(client_socket,"v15.1")
                 print("sending Message")
             time.sleep(10)
 
             
-class Motor(threading.Thread):
+class MOTOR(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self, name='Motor Thread')
     
@@ -73,8 +77,6 @@ motor = MOTOR()
 motor.start()
 
 #BLUETOOTH THREAD
-server_socket= BluetoothSocket(RFCOMM)
-server_socket,client_socket,address = bt2.bt_setup(server_socket)
 while True:
     data = bt2.read(client_socket)
     print("Received: %s" %data)
