@@ -49,20 +49,45 @@ class MOTOR(threading.Thread):
     def run(self):
         global tds_Value
         tds_Value = tds()
+        global tds_Range
+        tds_Range = 0
         while 1:
-            #if tds_Value < tds_Min
-            if tds_Value < 100: # when tds value is lower than minimum tds.
-                motor_7run(1) # turn on motor during 5 sec.
-                time.sleep(120) # and wait 2 min.
-                
-            #elif tds_Value > tds_Max
-            elif tds_Value > 200: # when tds value is lower than maximum tds.
-                motor_8run(1) # turn on motor during 30 sec.
-                time.sleep(120) # and wait 2 min.
-                
+            #상추일때
+            if tds_Range == 1:
+                if tds_Value < 500: # tds가 500보다 낮으면
+                    motor_7run(1)   #양액A 1초간 넣어줌
+                    motor_8run(1)   #양액B 1초간 넣어줌
+                    time.sleep(120) #양액이 퍼지는 동안 기다려줌 (2분)
+                elif tds_Value > 800: #tds가 800보다 낮으면
+                    motor_6run(5)     #물을 5초 동안 넣어줌
+                    time.sleep(120)   #농도가 변화할때까지 기다림
+                else:
+                    time.sleep(1)  # 양액이 적정범위인지 1초마다 검사
+            #부추일때
+            elif tds_Range == 2:
+                if tds_Value < 800:
+                    motor_7run(1)
+                    motor_8run(1)
+                    time.sleep(120)
+                elif tds_Value > 1000:
+                    motor_6run(1)
+                    time.sleep(120)
+                else:
+                    time.sleep(1)
+            #딸기일때
+            elif tds_Range == 3:
+                if tds_Value < 900:
+                    motor_7run(1)
+                    motor_8run(1)
+                    time.sleep(120)
+                elif tds_Value > 1000:
+                    motor_6run(1)
+                    time.sleep(120)
+                else:
+                    time.sleep(1)
             else:
-                time.sleep(1)
-        
+                print('Select crops by your smartphone')
+
 print("main thread start")
 #LED THREAD
 led = LED()
@@ -98,12 +123,16 @@ while True:
             print("data error")
             
     elif('#' in data):
+        global tds_Range
         if(data[0]=='1'):
             print("TDS: lettuce mode")
+            tds_Range = 1
         elif(data[0]=='2'):
             print("TDS: chives mode")
+            tds_Range = 2
         elif(data[0]=='3'):
             print("TDS: strawberry mode")
+            tds_Range = 3
         else:
             printf("data error")
             
