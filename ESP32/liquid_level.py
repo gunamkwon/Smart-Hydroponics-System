@@ -2,7 +2,7 @@ import time
 import grove.gpio as GPIO
 
 
-def setup(pin):
+def liquid_setup(pin):
     GPIO.setmode(GPIO.BCM)
     water_level = GPIO(pin, GPIO.IN)
 
