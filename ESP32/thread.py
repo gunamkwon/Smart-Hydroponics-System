@@ -16,7 +16,6 @@ import RPi.GPIO as GPIO
 from grove.adc import ADC
 
 # global variable
-led_auto = 0
 
 # Make Socket
 server_socket= BluetoothSocket(RFCOMM)
@@ -34,11 +33,13 @@ class LED(threading.Thread):
                     led.led_on()
                 else:
                     led.led_off()
-                time.sleep(0.1)
+                    
             else:
-                send = 1
-                print("led_task is manul now")
-                time.sleep(10)
+                if(led_ctrl==1):
+                    led.led_on()
+                else:
+                    led.led_off()
+            time.sleep(0.1)
             
 class LEVEL(threading.Thread):
     def __init__(self):
@@ -51,10 +52,10 @@ class LEVEL(threading.Thread):
             print("chekcing level\n")
             ret = 0
             if(ret != 1):
-                bt2.send(client_socket,"l1") #l1 = sufficient
+                bt2.send(client_socket,"lSufficient") #l1 = sufficient
                 print("sending Message")
             else:
-                bt2.send(client_socket,"l0") #l0 = enough
+                bt2.send(client_socket,"lEnough") #l0 = enough
             time.sleep(10)
 
             
@@ -139,17 +140,23 @@ while True:
     print("Received: %s" %data)
     
     if('A' in data):
+        global led_auto # 1: auto // 0: manual
         if(data[0]=='2'):
+            led_auto = 1
             print("Auto Mode ON")
         elif(data[0]=='1'):
+            led_auto = 0
             print("Manual Mode ON")
         else:
             print("data error")
             
     elif('M' in data):
+        global led_ctrl
         if(data[0]=='1'):
+            led_ctrl = 1
             print("LED ON")
         elif(data[0]=='2'):
+            led_ctrl = 0
             print("LED OFF")
         else:
             print("data error")
