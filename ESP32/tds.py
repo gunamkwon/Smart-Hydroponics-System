@@ -28,4 +28,7 @@ def tds():
     
  
 if __name__ == '__main__':
-    tds()
+    while 1:
+        tds_Value = tds()
+        print('tds value : {}'.format(tds_Value))
+        time.sleep(1)
