@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 
 def led_setup():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(4, GPIO.OUT) ##GPIO 4 LED OUTPUT
+    GPIO.setup(17, GPIO.OUT) # GPIO 17 LED OUTPUT
     
 def time_now():
     now= time.localtime()
@@ -14,21 +14,29 @@ def time_now():
         return 0;
 
 def led_run(nowHour):
-    #if now.tm_hour>=7 and now.tm_hour<20: # turn on 7:00 to 20:00
     if nowHour == 1:
-        GPIO.output(4, False)
-        print('led on')
-        time.sleep(5)
-        
+        GPIO.output(17, True)
     else:
-        GPIO.output(4, True)
-        print('led off')
-        time.sleep(5)
+        GPIO.output(17, False)
+
+def led_control(ctrl):
+    if(ctrl == 1):
+        GPIO.output(17, True)
+    else:
+        GPIO.output(17, False)
+    time.sleep(1)
+def led_on():
+    GPIO.output(17, True)
     
+def led_off():
+    GPIO.output(17, False)
     
 if __name__ == '__main__':
     led_setup()
-    now = time_now()
-    print('{}'.format(now))
     while 1:
-        led_run(now)
+        auto_time = time_now()
+        print(auto_time)
+        if(auto_time == 1):
+            led_on()
+        else:
+            led_off()

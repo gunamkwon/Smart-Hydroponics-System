@@ -14,14 +14,14 @@ class GroveTDS:
         value = self.adc.read(self.channel)
         if value != 0:
             voltage = value*5/1024.0
-            tdsValue = (133.42/voltage*voltage*voltage-255.86*voltage*voltage+857.39*voltage)*0.5
+            tdsValue = (133.42/voltage*voltage*voltage-255.86*voltage*voltage+857.39*voltage)#*0.5
             return tdsValue
         else:
             return 0
  
 Grove = GroveTDS
  
-def tds():
+def get_tds():
     sensor = GroveTDS(0)
     tds_Value = sensor.TDS
     return tds_Value
@@ -29,6 +29,6 @@ def tds():
  
 if __name__ == '__main__':
     while 1:
-        tds_Value = tds()
+        tds_Value = get_tds()
         print('tds value : {}'.format(tds_Value))
         time.sleep(1)
