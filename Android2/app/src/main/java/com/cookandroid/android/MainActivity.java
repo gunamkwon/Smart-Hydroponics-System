@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
     public void bluetoothOFF() {
         if(bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.disable();
-            fragment_sys.setConnectState(0);
             Toast.makeText(getApplicationContext(), "블루투스가 비활성화 되었습니다.", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -215,9 +214,10 @@ public class MainActivity extends AppCompatActivity {
                     //status.setText("Connecting");
                     break;
                 case STATE_CONNECTED:
-                    //status.setText("Connected");
+                    fragment_sys.setConnectState(1);
                     break;
                 case STATE_CONNECTION_FAILED:
+                    fragment_sys.setConnectState(0);
                     //status.setText("Connection Failed");
                     break;
                 case STATE_MESSAGE_RECEIVED:
@@ -246,24 +246,19 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓 생성에 실패했습니다.", Toast.LENGTH_SHORT).show();
         }
 
-        System.out.println(BT_UUID);
-
         try {
             mBluetoothSocket.connect();
         } catch (IOException e) {
             try {
                 mBluetoothSocket.close();
-                fragment_sys.setConnectState(0);
                 Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료되었습니다.", Toast.LENGTH_SHORT).show();
             } catch(IOException e2) {
                 Toast.makeText(getApplicationContext(), "블루투스 연결 중 소켓이 종료가 실패되었습니다.", Toast.LENGTH_LONG).show();
             }
         }
 
-
         mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
         mThreadConnectedBluetooth.start();
-        fragment_sys.setConnectState(1);
     }
 
     private class ConnectedBluetoothThread extends Thread {
@@ -279,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
+
             } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), "소켓 연결 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
             }
@@ -302,9 +298,15 @@ public class MainActivity extends AppCompatActivity {
                         bytes = mmInStream.available(); // how many bytes are ready to be read?
                         bytes = mmInStream.read(buffer, 0, bytes); // record how many bytes we actually read
                         handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
+                        Message message=Message.obtain();
+                        message.what=STATE_CONNECTED;
+                        handler.sendMessage(message);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Message message=Message.obtain();
+                    message.what=STATE_CONNECTION_FAILED;
+                    handler.sendMessage(message);
 
                     break;
                 }
