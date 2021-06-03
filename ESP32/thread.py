@@ -63,7 +63,7 @@ class LEVEL(threading.Thread):
                 ret = check()
                 if(ret != ret_temp):
                     if(ret != 1):
-                        bt2.send(client_socket,"lSufficient") #l1 = sufficient
+                        bt2.send(client_socket,"lUnsufficient") #l1 = sufficient
                         i = 0
                     else:
                         bt2.send(client_socket,"lEnough") #l0 = enough
